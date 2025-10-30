@@ -91,24 +91,24 @@ public class FlyWheel extends SmartVelocityMechanism
                                                 dcMotor));
 
       m_smc.setSimSupplier(new DCMotorSimSupplier(m_dcmotorSim.get(), m_smc));
-      Distance ShooterLength = config.getLength().orElse(Inches.of(36));
-      m_mechanismWindow = new Mechanism2d(ShooterLength.in(Meters) * 2,
-                                          ShooterLength.in(Meters) * 2);
+      Distance flyWheelLength = config.getLength().orElse(Inches.of(36));
+      m_mechanismWindow = new Mechanism2d(flyWheelLength.in(Meters) * 2,
+                                          flyWheelLength.in(Meters) * 2);
       mechanismRoot = m_mechanismWindow.getRoot(getName() + "Root",
-                                                ShooterLength.in(Meters), ShooterLength.in(Meters));
+                                                flyWheelLength.in(Meters), flyWheelLength.in(Meters));
       mechanismLigament = mechanismRoot.append(new MechanismLigament2d(getName(),
-                                                                       ShooterLength.in(Meters),
+                                                                       flyWheelLength.in(Meters),
                                                                        0, 6, config.getSimColor()));
       if (config.isUsingSpeedometerSimulation() && config.getSpeedometerMaxVelocity().isPresent())
       {
         mechanismRoot.append(new MechanismLigament2d(getName() + " Upper Limit",
-                                                     ShooterLength.in(Meters),
+                                                     flyWheelLength.in(Meters),
                                                      270 - config.getUpperSoftLimit().orElse(RPM.of(0)).in(RPM) /
                                                            config.getSpeedometerMaxVelocity().orElse(RPM.of(20000))
                                                                  .in(RPM) * 180,
                                                      6, new Color8Bit(Color.kHotPink)));
         mechanismRoot.append(new MechanismLigament2d(getName() + " Lower Limit",
-                                                     ShooterLength.in(Meters),
+                                                     flyWheelLength.in(Meters),
                                                      270 - config.getLowerSoftLimit().orElse(RPM.of(0)).in(RPM) /
                                                            config.getSpeedometerMaxVelocity().orElse(RPM.of(20000))
                                                                  .in(RPM) * 180,
@@ -354,7 +354,7 @@ public class FlyWheel extends SmartVelocityMechanism
    *
    * @return The {@link FlyWheelConfig} object for this {@link FlyWheel}
    */
-  public FlyWheelConfig getShooterConfig()
+  public FlyWheelConfig getFlywheelConfig()
   {
     return m_config;
   }
